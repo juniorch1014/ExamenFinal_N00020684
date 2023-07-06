@@ -100,105 +100,76 @@ public class DuelistaDetallesActivity extends AppCompatActivity {
         CartaService serviceM = mRetrofit.create(CartaService.class);
 
         if (isNetworkConnected()) {
-                    List<Carta> SinSincroMovimientos = repositoryM.searchMovimiento(false);
-                    for (Movimientos movimientos : SinSincroMovimientos) {
-                        Log.d("MAIN_APP: DB SSincro", new Gson().toJson(movimientos));
-                        movimientos.sincronizadoMovimientos = true;
+                    List<Carta> SinSincroCarta = repositoryC.searchCarta(false);
+                    for (Carta carta : SinSincroCarta) {
+                        Log.d("MAIN_APP: DB SSincro", new Gson().toJson(carta));
+                        carta.sincronizadoCartas = true;
 //                        base64toLink(movimientos.imagenBase64);
 //                        movimientos.urlimagen = urlImage;
-                        double Latitud = LocationData.getInstance().getLatitude();
-                        double Longitud = LocationData.getInstance().getLongitude();
-                        movimientos.latitud = String.valueOf(Latitud);
-                        movimientos.longitud= String.valueOf(Longitud);
+                     //   double Latitud = LocationData.getInstance().getLatitude();
+                     //   double Longitud = LocationData.getInstance().getLongitude();
+                     //   carta.latitud = String.valueOf(Latitud);
+                      //  carta.longitud= String.valueOf(Longitud);
 
-                        repositoryM.updateMovimiento(movimientos);
+                        repositoryC.updateCartas(carta);
                         //*****SINCRO*************************
-                        SincronizacionMovimientos(serviceM,movimientos);
+                        SincronizacionCarta(serviceM,carta);
                     }
-                    List<Movimientos> EliminarDBMovimiento = repositoryM.getAllMovimientos();
-                    downloadingMockAPIMovimientos(serviceM,repositoryM,EliminarDBMovimiento);
+                    List<Carta> EliminarDBMovimiento = repositoryC.getAllCarta();
+                    downloadingMockAPICarta(serviceM,repositoryC,EliminarDBMovimiento);
                     Toast.makeText(getBaseContext(), "SINCRONIZADO", Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(getBaseContext(), "NO HAY INTERNET", Toast.LENGTH_SHORT).show();
 
                 }
 
-
-//        btSincroMov.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (isNetworkConnected()) {
-//                    List<Carta> SinSincroMovimientos = repositoryM.searchMovimiento(false);
-//                    for (Movimientos movimientos : SinSincroMovimientos) {
-//                        Log.d("MAIN_APP: DB SSincro", new Gson().toJson(movimientos));
-//                        movimientos.sincronizadoMovimientos = true;
-////                        base64toLink(movimientos.imagenBase64);
-////                        movimientos.urlimagen = urlImage;
-//                        double Latitud = LocationData.getInstance().getLatitude();
-//                        double Longitud = LocationData.getInstance().getLongitude();
-//                        movimientos.latitud = String.valueOf(Latitud);
-//                        movimientos.longitud= String.valueOf(Longitud);
-//
-//                        repositoryM.updateMovimiento(movimientos);
-//                        //*****SINCRO*************************
-//                        SincronizacionMovimientos(serviceM,movimientos);
-//                    }
-//                    List<Movimientos> EliminarDBMovimiento = repositoryM.getAllMovimientos();
-//                    downloadingMockAPIMovimientos(serviceM,repositoryM,EliminarDBMovimiento);
-//                    Toast.makeText(getBaseContext(), "SINCRONIZADO", Toast.LENGTH_SHORT).show();
-//                }else {
-//                    Toast.makeText(getBaseContext(), "NO HAY INTERNET", Toast.LENGTH_SHORT).show();
-//
-//                }
-//            }
-//        });
-//    }
+   }
 
 
 
-//    private void SincronizacionMovimientos(MovimientoService movimientoService, Movimientos movimientos) {
-//        Call<Movimientos> call = movimientoService.create(movimientos);
-//        call.enqueue(new Callback<Movimientos>() {
-//            @Override
-//            public void onResponse(Call<Movimientos> call, Response<Movimientos> response) {
-//                if(response.isSuccessful()){
-//                    Movimientos data = response.body();
-//                    Log.i("MAIN_APP: MovMockAPI", new Gson().toJson(data));
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Movimientos> call, Throwable t) {
-//
-//            }
-//        });
-//    }
-//    private void downloadingMockAPIMovimientos(MovimientoService movimientoService, MovimientoRepository movimientoRepository, List<Movimientos> eliminarDBMovimiento) {
-//        //***Eleminar datos de BD
-//        movimientoRepository.deleteList(eliminarDBMovimiento);
-//        //Cargar datos de MockAPI
-//        Call<List<Movimientos>> call = movimientoService.getAllUser();
-//        call.enqueue(new Callback<List<Movimientos>>() {
-//            @Override
-//            public void onResponse(Call<List<Movimientos>> call, Response<List<Movimientos>> response) {
-//                List<Movimientos> data = response.body();
-//                Log.i("MAIN_APP", new Gson().toJson(data));
-//
-//                for (Movimientos movimientos : data) {
-//                    movimientoRepository.createMovimientos(movimientos);
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Movimientos>> call, Throwable t) {
-//
-//            }
-//        });
-//
-//    }
-//
-//
+    private void SincronizacionCarta(CartaService movimientoService, Carta carta) {
+        Call<Carta> call = movimientoService.create(carta);
+        call.enqueue(new Callback<Carta>() {
+            @Override
+            public void onResponse(Call<Carta> call, Response<Carta> response) {
+                if(response.isSuccessful()){
+                    Carta data = response.body();
+                    Log.i("MAIN_APP: MovMockAPI", new Gson().toJson(data));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Carta> call, Throwable t) {
+
+            }
+        });
+    }
+    private void downloadingMockAPICarta(CartaService cartaService, CartaRepository cartaRepository, List<Carta> eliminarDBCarta) {
+        //***Eleminar datos de BD
+        cartaRepository.deleteList(eliminarDBCarta);
+        //Cargar datos de MockAPI
+        Call<List<Carta>> call = cartaService.getAllUser();
+        call.enqueue(new Callback<List<Carta>>() {
+            @Override
+            public void onResponse(Call<List<Carta>> call, Response<List<Carta>> response) {
+                List<Carta> data = response.body();
+                Log.i("MAIN_APP", new Gson().toJson(data));
+
+                for (Carta carta : data) {
+                    cartaRepository.createCarta(carta);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Carta>> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
@@ -209,13 +180,13 @@ public class DuelistaDetallesActivity extends AppCompatActivity {
 //                .baseUrl("https://demo-upn.bit2bittest.com/")
 //                .addConverterFactory(GsonConverterFactory.create())
 //                .build();
-//        MovimientoService service = retrofit1.create(MovimientoService.class);
-//        Call<MovimientoService.ImagenResponse> call = service.guardarImage(new MovimientoService.ImagenToSave(base64));
-//        call.enqueue(new Callback<MovimientoService.ImagenResponse>() {
+//        CartaService service = retrofit1.create(CartaService.class);
+//        Call<CartaService.ImagenResponse> call = service.guardarImage(new CartaService.ImagenToSave(base64));
+//        call.enqueue(new Callback<CartaService.ImagenResponse>() {
 //            @Override
-//            public void onResponse(Call<MovimientoService.ImagenResponse> call, Response<MovimientoService.ImagenResponse> response) {
+//            public void onResponse(Call<CartaService.ImagenResponse> call, Response<CartaService.ImagenResponse> response) {
 //                if (response.isSuccessful()) {
-//                    MovimientoService.ImagenResponse imageResponse = response.body();
+//                    CartaService.ImagenResponse imageResponse = response.body();
 //                    Log.i("Respues", response.toString());
 //                    urlImage = "https://demo-upn.bit2bittest.com/" + imageResponse.getUrl();
 //                    Toast.makeText(getBaseContext(), "Link GENERADO", Toast.LENGTH_SHORT).show();
@@ -223,15 +194,15 @@ public class DuelistaDetallesActivity extends AppCompatActivity {
 //
 //                } else {
 //
-//                    Log.e("Error cargar imagen",response.toString());
+//                    Log.e("Error cargar imagen", response.toString());
 //                }
 //            }
 //
 //            @Override
-//            public void onFailure(Call<MovimientoService.ImagenResponse> call, Throwable t) {
+//            public void onFailure(Call<CartaService.ImagenResponse> call, Throwable t) {
 //
 //            }
 //        });
-
-    }
+//
+//    }
 }

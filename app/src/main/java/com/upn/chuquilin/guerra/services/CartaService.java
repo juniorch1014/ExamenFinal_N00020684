@@ -1,5 +1,6 @@
 package com.upn.chuquilin.guerra.services;
 
+import com.google.gson.annotations.SerializedName;
 import com.upn.chuquilin.guerra.entities.Carta;
 
 import java.util.List;
@@ -39,4 +40,24 @@ public interface CartaService {
 
     @DELETE("cartas/{id}")
     Call<Void> delete(@Path("id") int id);
+
+    @POST ("image")
+    Call<ImagenResponse> guardarImage (@Body ImagenToSave imagen);
+
+
+    class  ImagenResponse{
+        @SerializedName("url")
+        private String url;
+
+        public String getUrl() {
+            return url;
+        }
+    }
+    class ImagenToSave{
+        String base64Image;
+
+        public ImagenToSave(String base64Image){
+            this.base64Image = base64Image;
+        }
+    }
 }
