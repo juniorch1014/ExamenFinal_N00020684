@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.upn.chuquilin.guerra.DuelistaDetallesActivity;
+import com.upn.chuquilin.guerra.DuelistaListActivity;
 import com.upn.chuquilin.guerra.R;
 import com.upn.chuquilin.guerra.entities.Duelista;
 
