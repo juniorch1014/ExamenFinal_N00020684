@@ -26,7 +26,7 @@ public interface DuelistaRepository {
     @Insert
     void AgregarList(List<Duelista> duelistas);
     @Update
-    void  updateCartas(Duelista duelista);
+    void  updateDuelista(Duelista duelista);
 
     @Delete
     void delete(Duelista duelista);
