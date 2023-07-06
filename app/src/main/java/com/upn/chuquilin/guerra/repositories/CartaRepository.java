@@ -18,8 +18,8 @@ public interface CartaRepository {
     @Query("SELECT * FROM cartas WHERE sincronizadoCartas LIKE :searchSincro")
     List<Carta> searchCarta(boolean searchSincro);
 
-    @Query("SELECT * FROM cartas WHERE id LIKE :id")
-    Carta searchCartaID(int id);
+    @Query("SELECT * FROM cartas WHERE duelistaID LIKE :id")
+    List<Carta> searchCartaID(int id);
 
     @Insert
     void createCarta(Carta carta);

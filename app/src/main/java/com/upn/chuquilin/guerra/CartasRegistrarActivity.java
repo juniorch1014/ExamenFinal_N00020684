@@ -28,7 +28,10 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.upn.chuquilin.guerra.db.AppDatabase;
+import com.upn.chuquilin.guerra.entities.Carta;
+import com.upn.chuquilin.guerra.entities.LocationData;
 import com.upn.chuquilin.guerra.repositories.CartaRepository;
+import com.upn.chuquilin.guerra.services.CartaService;
 
 import java.io.ByteArrayOutputStream;
 
@@ -89,48 +92,36 @@ public class CartasRegistrarActivity extends AppCompatActivity {
         Log.d("MAIN_APP3-Lat", String.valueOf(Latitud));
         Log.d("MAIN_APP3-Long", String.valueOf(Longitud));
 
-        tvLatitudMov.setText(String.valueOf(Latitud));
-        tvLongitudMov.setText(String.valueOf(Longitud));
 
-
-
-        btCamaraMov.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleOpenCamera();
-            }
-        });
-
-        btGaleriaMov.setOnClickListener(new View.OnClickListener() {
+        btGaleriaCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openGallery();
             }
         });
 
-        btRegistrarMov.setOnClickListener(new View.OnClickListener() {
+        btRegistrarCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (edMontoMov.getText().toString().trim().isEmpty() || edMotivoMov.getText().toString().trim().isEmpty() || seleccionSpinner.equals(" ")) {
+                if (edNombreCart.getText().toString().trim().isEmpty() || edAtaqueCart.getText().toString().trim().isEmpty()) {
                     Toast.makeText(getBaseContext(), "Llenar Datos", Toast.LENGTH_SHORT).show();
                 } else {
-                    Movimientos movimientos = new Movimientos();
-                    movimientos.cuentaID       = idObtener;
-                    movimientos.tipoMovimiento = seleccionSpinner;
-                    movimientos.monto          = Integer.parseInt(String.valueOf(edMontoMov.getText()));
-                    movimientos.motivo         = String.valueOf(edMotivoMov.getText());
-                    movimientos.latitud        = String.valueOf(Latitud);
-                    movimientos.longitud       = String.valueOf(Longitud);
-                    movimientos.imagenBase64   = imagenBase64;
-                    movimientos.urlimagen      = urlImage;
-                    movimientos.sincronizadoMovimientos = false;
+                    Carta carta = new Carta();
+                    carta.duelistaID     = idObtener;
+                    carta.puntosAtaque   = Integer.parseInt(String.valueOf(edAtaqueCart.getText()));
+                    carta.puntosDefenza  = Integer.parseInt(String.valueOf(tvLatitudCart.getText()));
+                    carta.latitud        = String.valueOf(Latitud);
+                    carta.longitud       = String.valueOf(Longitud);
+                    carta.imagenBase64   = imagenBase64;
+                    carta.urlimagen      = urlImage;
+                    carta.sincronizadoCartas = false;
 
                     //movimientos.tipoMovimiento = seleccionSpinner;
 
-                    repositoryM.createMovimientos(movimientos);
-                    Log.i("MAIN_APP: GuardaM en DB", new Gson().toJson(movimientos));
+                    repositoryM.createCarta(carta);
+                    Log.i("MAIN_APP: GuardaM en DB", new Gson().toJson(carta));
                 }
-                Intent intent = new Intent(getApplicationContext(), CuentaDetallesActivity.class);
+                Intent intent = new Intent(getApplicationContext(), DuelistaDetallesActivity.class);
                 intent.putExtra("id", idObtener);
                 startActivity(intent);
             }
@@ -143,7 +134,7 @@ public class CartasRegistrarActivity extends AppCompatActivity {
 
         if (requestCode == OPEN_CAMERA_REQUEST && resultCode == RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
-            ivBauchesMov.setImageBitmap(photo);
+            ivImagenCart.setImageBitmap(photo);
 
             imagenBase64 = BitmaptoBase64(photo);
 
@@ -163,7 +154,7 @@ public class CartasRegistrarActivity extends AppCompatActivity {
             cursor.close(); // close cursor
 
             Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
-            ivBauchesMov.setImageBitmap(bitmap);
+            ivImagenCart.setImageBitmap(bitmap);
 
             imagenBase64 = BitmaptoBase64(bitmap);
 
@@ -177,25 +168,6 @@ public class CartasRegistrarActivity extends AppCompatActivity {
     }
 
 
-
-    private void handleOpenCamera() {
-        if(checkSelfPermission(android.Manifest.permission.CAMERA)  == PackageManager.PERMISSION_GRANTED)
-        {
-            // abrir camara
-            Log.i("MAIN_APP", "Tiene permisos para abrir la camara");
-            openCamara();
-        } else {
-            // solicitar el permiso
-            Log.i("MAIN_APP", "No tiene permisos para abrir la camara, solicitando");
-            String[] permissions = new String[] {Manifest.permission.CAMERA};
-            requestPermissions(permissions, 1001);
-        }
-    }
-
-    private void openCamara() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, OPEN_CAMERA_REQUEST);
-    }
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
@@ -224,13 +196,13 @@ public class CartasRegistrarActivity extends AppCompatActivity {
                 .baseUrl("https://demo-upn.bit2bittest.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        MovimientoService service = retrofit1.create(MovimientoService.class);
-        Call<MovimientoService.ImagenResponse> call = service.guardarImage(new MovimientoService.ImagenToSave(base64));
-        call.enqueue(new Callback<MovimientoService.ImagenResponse>() {
+        CartaService service = retrofit1.create(CartaService.class);
+        Call<CartaService.ImagenResponse> call = service.guardarImage(new CartaService.ImagenToSave(base64));
+        call.enqueue(new Callback<CartaService.ImagenResponse>() {
             @Override
-            public void onResponse(Call<MovimientoService.ImagenResponse> call, Response<MovimientoService.ImagenResponse> response) {
+            public void onResponse(Call<CartaService.ImagenResponse> call, Response<CartaService.ImagenResponse> response) {
                 if (response.isSuccessful()) {
-                    MovimientoService.ImagenResponse imageResponse = response.body();
+                    CartaService.ImagenResponse imageResponse = response.body();
                     Log.i("Respues", response.toString());
                     urlImage = "https://demo-upn.bit2bittest.com/" + imageResponse.getUrl();
                     tvUrlImagenMov.setText(urlImage);
@@ -244,7 +216,7 @@ public class CartasRegistrarActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<MovimientoService.ImagenResponse> call, Throwable t) {
+            public void onFailure(Call<CartaService.ImagenResponse> call, Throwable t) {
 
             }
         });

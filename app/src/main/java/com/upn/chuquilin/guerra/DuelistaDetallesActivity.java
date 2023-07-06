@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.upn.chuquilin.guerra.db.AppDatabase;
 import com.upn.chuquilin.guerra.entities.Carta;
 import com.upn.chuquilin.guerra.entities.Duelista;
+import com.upn.chuquilin.guerra.mapasController.MapsActivity;
 import com.upn.chuquilin.guerra.repositories.CartaRepository;
 import com.upn.chuquilin.guerra.repositories.DuelistaRepository;
 import com.upn.chuquilin.guerra.services.CartaService;
@@ -32,11 +33,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DuelistaDetallesActivity extends AppCompatActivity {
 
-    TextView tvNroDetallesC;
-    TextView tvNameDetallesC;
-    Button btRegistrarMov;
-    Button btListarMov;
-    Button btSincroMov;
+    TextView tvNroDetalles;
+    TextView tvNameDetalles;
+    Button btDetalleRegistrarDue;
+    Button btListarDue;
     Retrofit mRetrofit;
 
     String urlImage = "";
@@ -47,15 +47,15 @@ public class DuelistaDetallesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_duelista_detalles);
 
-//        Intent intent =  new Intent(getApplicationContext(), MapsActivity.class);
-//        startActivity(intent);
+        Intent intent =  new Intent(getApplicationContext(), MapsActivity.class);
+        startActivity(intent);
 
         mRetrofit = RetrofitBuilder.build();
 
-        tvNroDetallesC  = findViewById(R.id.tvNroDetalles);
-        tvNameDetallesC = findViewById(R.id.tvNameDetalles);
-        btRegistrarMov  = findViewById(R.id.btDetalleRegistrarDue);
-        btListarMov     = findViewById(R.id.btListarDue);
+        tvNroDetalles  = findViewById(R.id.tvNroDetalles);
+        tvNameDetalles = findViewById(R.id.tvNameDetalles);
+        btDetalleRegistrarDue  = findViewById(R.id.btDetalleRegistrarDue);
+        btListarDue     = findViewById(R.id.btListarDue);
 
 
         AppDatabase db = AppDatabase.getInstance(getApplicationContext());
@@ -70,24 +70,24 @@ public class DuelistaDetallesActivity extends AppCompatActivity {
 
         Duelista duelista = repositoryD.searchDuelistaID(idObtener);
 
-        tvNroDetallesC.setText(String.valueOf(duelista.id));
-        tvNameDetallesC.setText(duelista.nameDuelista);
+        tvNroDetalles.setText(String.valueOf(duelista.id));
+        tvNameDetalles.setText(duelista.nameDuelista);
 
 
 
 
 
-        btRegistrarMov.setOnClickListener(new View.OnClickListener() {
+        btDetalleRegistrarDue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), MovimientoRegistrarActivity.class);
-//                intent.putExtra("id", idObtener);
-//                Log.i("APP_MAIN: id", String.valueOf(idObtener));
-//                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), CartasRegistrarActivity.class);
+                intent.putExtra("id", idObtener);
+                Log.i("APP_MAIN: id", String.valueOf(idObtener));
+                startActivity(intent);
             }
         });
 
-        btListarMov.setOnClickListener(new View.OnClickListener() {
+        btListarDue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(getApplicationContext(), ListMovimientoActivity.class);
