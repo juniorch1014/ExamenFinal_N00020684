@@ -13,6 +13,7 @@ public class Carta {
     public int id;
     @ColumnInfo(name = "duelistaID")
     public int duelistaID;
+
     @ColumnInfo(name = "puntosAtaque")
     public int puntosAtaque;
     @ColumnInfo(name = "puntosDefenza")
@@ -27,6 +28,8 @@ public class Carta {
     public boolean sincronizadoCartas;
     @ColumnInfo(name = "imagenBase64")
     public String imagenBase64;
+    @ColumnInfo(name = "nameCarta")
+    public String nameCarta;
 
 
 

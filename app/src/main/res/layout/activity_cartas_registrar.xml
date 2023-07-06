@@ -39,7 +39,7 @@
         android:layout_marginTop="91dp"
         android:ems="10"
         android:hint="Nombre"
-        android:inputType="number"
+        android:inputType="text"
         app:layout_constraintStart_toEndOf="@+id/textView13"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
@@ -51,7 +51,7 @@
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Ataque"
-        android:inputType="text|textMultiLine"
+        android:inputType="number"
         app:layout_constraintStart_toEndOf="@+id/textView14"
         app:layout_constraintTop_toBottomOf="@+id/edNombreCart" />
 
@@ -63,7 +63,7 @@
         android:layout_marginTop="64dp"
         android:ems="10"
         android:hint="Defenza"
-        android:inputType="text|textMultiLine"
+        android:inputType="number"
         app:layout_constraintStart_toEndOf="@+id/textView14"
         app:layout_constraintTop_toBottomOf="@+id/edNombreCart" />
 

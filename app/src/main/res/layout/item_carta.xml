@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/ivImagenItemMov"
+        android:id="@+id/ivImagenItemCart"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_weight="0"
@@ -54,13 +54,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/textView26"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="UrlImagen : "
-            android:textAlignment="textEnd"
-            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -69,39 +62,34 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvTipoDetallesMov"
+            android:id="@+id/tvNombreDetallesCart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
 
         <TextView
-            android:id="@+id/tvMontoDetallesMov"
+            android:id="@+id/tvAtaqueDetallesCart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
 
         <TextView
-            android:id="@+id/tvMotivoDetallesMov"
+            android:id="@+id/tvDefenzaDetallesMov"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
 
         <TextView
-            android:id="@+id/tvLatitudDetMov"
+            android:id="@+id/tvLatitudDetCart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
 
         <TextView
-            android:id="@+id/tvLongitudDetMov"
+            android:id="@+id/tvLongitudDetCart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
 
-        <TextView
-            android:id="@+id/tvUrlDetMov"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
     </LinearLayout>
 </LinearLayout>

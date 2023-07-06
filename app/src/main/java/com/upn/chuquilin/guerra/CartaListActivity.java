@@ -46,7 +46,7 @@ public class CartaListActivity extends AppCompatActivity {
 
         CartaAdapter mAdapter = new CartaAdapter(mdataCarta);
         rvListaCarta.setAdapter(mAdapter);
-        Log.i("MAIN_APP: DBMovi", new Gson().toJson(mdataMovimiento));
+        Log.i("MAIN_APP: DBMovi", new Gson().toJson(mdataCarta));
         Toast.makeText(getBaseContext(), "MOSTRANDO DATOS", Toast.LENGTH_SHORT).show();
 
     }

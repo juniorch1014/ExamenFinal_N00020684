@@ -46,6 +46,7 @@ public class CartasRegistrarActivity extends AppCompatActivity {
 
     EditText edNombreCart;
     EditText edAtaqueCart;
+    EditText edDefenzaCart;
     TextView tvLatitudCart;
     TextView tvLongitudCart;
     TextView tvUrlImagenMov;
@@ -73,9 +74,9 @@ public class CartasRegistrarActivity extends AppCompatActivity {
         AppDatabase db = AppDatabase.getInstance(getApplicationContext());
         CartaRepository repositoryM = db.cartaRepository();
 
-
-        edNombreCart    = findViewById(R.id.edNombreCart);
+        edNombreCart   = findViewById(R.id.edNombreCart);
         edAtaqueCart   = findViewById(R.id.edAtaqueCart);
+        edDefenzaCart  = findViewById(R.id.edDefenzaCart);
         tvLatitudCart  = findViewById(R.id.tvLatitudCart);
         tvLongitudCart = findViewById(R.id.tvLongitudCart);
         ivImagenCart  = findViewById(R.id.ivImagenCart);
@@ -92,6 +93,8 @@ public class CartasRegistrarActivity extends AppCompatActivity {
         Log.d("MAIN_APP3-Lat", String.valueOf(Latitud));
         Log.d("MAIN_APP3-Long", String.valueOf(Longitud));
 
+        tvLatitudCart.setText(String.valueOf(Latitud));
+        tvLongitudCart.setText(String.valueOf(Longitud));
 
         btGaleriaCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,12 +112,13 @@ public class CartasRegistrarActivity extends AppCompatActivity {
                     Carta carta = new Carta();
                     carta.duelistaID     = idObtener;
                     carta.puntosAtaque   = Integer.parseInt(String.valueOf(edAtaqueCart.getText()));
-                    carta.puntosDefenza  = Integer.parseInt(String.valueOf(tvLatitudCart.getText()));
+                    carta.puntosDefenza  = Integer.parseInt(String.valueOf(edDefenzaCart.getText()));
                     carta.latitud        = String.valueOf(Latitud);
                     carta.longitud       = String.valueOf(Longitud);
                     carta.imagenBase64   = imagenBase64;
                     carta.urlimagen      = urlImage;
                     carta.sincronizadoCartas = false;
+                    carta.nameCarta      = String.valueOf(edNombreCart.getText());
 
                     //movimientos.tipoMovimiento = seleccionSpinner;
 
@@ -168,6 +172,24 @@ public class CartasRegistrarActivity extends AppCompatActivity {
     }
 
 
+    private void handleOpenCamera() {
+        if(checkSelfPermission(android.Manifest.permission.CAMERA)  == PackageManager.PERMISSION_GRANTED)
+        {
+            // abrir camara
+            Log.i("MAIN_APP", "Tiene permisos para abrir la camara");
+            openCamara();
+        } else {
+            // solicitar el permiso
+            Log.i("MAIN_APP", "No tiene permisos para abrir la camara, solicitando");
+            String[] permissions = new String[] {Manifest.permission.CAMERA};
+            requestPermissions(permissions, 1001);
+        }
+    }
+
+    private void openCamara() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, OPEN_CAMERA_REQUEST);
+    }
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");

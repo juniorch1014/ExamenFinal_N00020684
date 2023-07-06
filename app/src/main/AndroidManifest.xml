@@ -32,6 +32,9 @@
         android:theme="@style/Theme.EzamenFinal_N00020684"
         tools:targetApi="31">
         <activity
+            android:name=".CartaDetallesActivity"
+            android:exported="false" />
+        <activity
             android:name=".CartaListActivity"
             android:exported="false" />
         <!--

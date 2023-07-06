@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.upn.chuquilin.guerra.db.AppDatabase;
 import com.upn.chuquilin.guerra.entities.Carta;
 import com.upn.chuquilin.guerra.entities.Duelista;
+import com.upn.chuquilin.guerra.entities.LocationData;
 import com.upn.chuquilin.guerra.mapasController.MapsActivity;
 import com.upn.chuquilin.guerra.repositories.CartaRepository;
 import com.upn.chuquilin.guerra.repositories.DuelistaRepository;
@@ -90,10 +91,10 @@ public class DuelistaDetallesActivity extends AppCompatActivity {
         btListarDue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), ListMovimientoActivity.class);
-//                intent.putExtra("id2", idObtener);
-//                Log.i("APP_MAIN: id2", String.valueOf(idObtener));
-//                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), CartaListActivity.class);
+                intent.putExtra("id2", idObtener);
+                Log.i("APP_MAIN: id2", String.valueOf(idObtener));
+                startActivity(intent);
             }
         });
 
@@ -106,10 +107,10 @@ public class DuelistaDetallesActivity extends AppCompatActivity {
                         carta.sincronizadoCartas = true;
 //                        base64toLink(movimientos.imagenBase64);
 //                        movimientos.urlimagen = urlImage;
-                     //   double Latitud = LocationData.getInstance().getLatitude();
-                     //   double Longitud = LocationData.getInstance().getLongitude();
-                     //   carta.latitud = String.valueOf(Latitud);
-                      //  carta.longitud= String.valueOf(Longitud);
+                        double Latitud = LocationData.getInstance().getLatitude();
+                        double Longitud = LocationData.getInstance().getLongitude();
+                        carta.latitud = String.valueOf(Latitud);
+                        carta.longitud= String.valueOf(Longitud);
 
                         repositoryC.updateCartas(carta);
                         //*****SINCRO*************************
@@ -127,8 +128,8 @@ public class DuelistaDetallesActivity extends AppCompatActivity {
 
 
 
-    private void SincronizacionCarta(CartaService movimientoService, Carta carta) {
-        Call<Carta> call = movimientoService.create(carta);
+    private void SincronizacionCarta(CartaService cartaService, Carta carta) {
+        Call<Carta> call = cartaService.create(carta);
         call.enqueue(new Callback<Carta>() {
             @Override
             public void onResponse(Call<Carta> call, Response<Carta> response) {
