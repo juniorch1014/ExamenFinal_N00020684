@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
                     nameDuelista.setText("");
                     Log.i("MAIN_APP: Guarda en DB", new Gson().toJson(duelista));
                 }
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -71,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
         btListarDuelista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getApplicationContext(), ListDuelistaActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), DuelistaListActivity.class);
+                startActivity(intent);
             }
         });
 
