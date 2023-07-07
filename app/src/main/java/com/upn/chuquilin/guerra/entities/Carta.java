@@ -10,7 +10,7 @@ public class Carta {
 
     public int idC;
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    public int idP;
     @ColumnInfo(name = "duelistaID")
     public int duelistaID;
 

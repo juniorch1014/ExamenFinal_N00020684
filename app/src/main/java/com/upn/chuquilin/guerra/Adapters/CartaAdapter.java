@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
+import com.upn.chuquilin.guerra.CartaDetallesActivity;
 import com.upn.chuquilin.guerra.R;
 import com.upn.chuquilin.guerra.entities.Carta;
 
@@ -59,10 +60,10 @@ public class CartaAdapter extends RecyclerView.Adapter{
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(v.getContext(), CartaDetallesActivity.class);
-//                intent.putExtra("idM",item.id);
-//                v.getContext().startActivity(intent);
-//                Log.d("APP_MAIN: IDMovi", String.valueOf(item.id));
+                Intent intent = new Intent(v.getContext(), CartaDetallesActivity.class);
+                intent.putExtra("idCD",item.idP);
+                v.getContext().startActivity(intent);
+                Log.d("APP_MAIN: IDCD", String.valueOf(item.idP));
             }
         });
 

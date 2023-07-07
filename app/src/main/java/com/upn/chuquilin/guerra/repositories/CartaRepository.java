@@ -21,6 +21,8 @@ public interface CartaRepository {
     @Query("SELECT * FROM cartas WHERE duelistaID LIKE :id")
     List<Carta> searchCartaID(int id);
 
+    @Query("SELECT * FROM cartas WHERE idP LIKE :id")
+    Carta searchCartaID2(int id);
     @Insert
     void createCarta(Carta carta);
     @Insert

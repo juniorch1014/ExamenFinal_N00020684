@@ -50,6 +50,28 @@ public class MainActivity extends AppCompatActivity {
         AppDatabase db = AppDatabase.getInstance(getApplicationContext());
         DuelistaRepository repositoryD = db.duelistaRepository();
 
+        DuelistaService serviceD = mRetrofit.create(DuelistaService.class);
+
+        if (isNetworkConnected()) {
+            List<Duelista> SinSicroDuelistas = repositoryD.searchDuelista(false);
+            for (Duelista duelista :SinSicroDuelistas) {
+                Log.d("MAIN_APP: DB SSincro", new Gson().toJson(duelista));
+                duelista.sincronizadoDuelista = true;
+                repositoryD.updateDuelista(duelista);
+                //*****SINCRO*************************
+                SincronizacionDuelista(serviceD,duelista);
+
+            }
+            List<Duelista> EliminarBDDuelista= repositoryD.getAllDuelista();
+            downloadingMockAPIDuelista(serviceD,repositoryD,EliminarBDDuelista);
+
+            Toast.makeText(getBaseContext(), "SINCRONIZADO", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(getBaseContext(), "NO HAY INTERNET", Toast.LENGTH_SHORT).show();
+
+        }
+
+
         btRegistrarDuelista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,26 +100,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        DuelistaService serviceD = mRetrofit.create(DuelistaService.class);
 
-        if (isNetworkConnected()) {
-            List<Duelista> SinSicroDuelistas = repositoryD.searchDuelista(false);
-            for (Duelista duelista :SinSicroDuelistas) {
-                Log.d("MAIN_APP: DB SSincro", new Gson().toJson(duelista));
-                duelista.sincronizadoDuelista = true;
-                repositoryD.updateDuelista(duelista);
-                //*****SINCRO*************************
-                SincronizacionDuelista(serviceD,duelista);
-
-            }
-            List<Duelista> EliminarBDDuelista= repositoryD.getAllDuelista();
-            downloadingMockAPIDuelista(serviceD,repositoryD,EliminarBDDuelista);
-
-            Toast.makeText(getBaseContext(), "SINCRONIZADO", Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(getBaseContext(), "NO HAY INTERNET", Toast.LENGTH_SHORT).show();
-
-        }
     }
 
     private void SincronizacionDuelista(DuelistaService duelistaService, Duelista duelista){

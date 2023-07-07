@@ -126,4 +126,14 @@
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/textView20"
         app:layout_constraintTop_toBottomOf="@+id/imagenDetCart" />
+
+    <Button
+        android:id="@+id/btMapastas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="154dp"
+        android:layout_marginTop="77dp"
+        android:text="Mapas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/longitudCart" />
 </androidx.constraintlayout.widget.ConstraintLayout>

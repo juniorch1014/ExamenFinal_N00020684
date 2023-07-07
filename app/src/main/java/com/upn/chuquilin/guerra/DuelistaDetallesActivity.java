@@ -74,7 +74,31 @@ public class DuelistaDetallesActivity extends AppCompatActivity {
         tvNroDetalles.setText(String.valueOf(duelista.id));
         tvNameDetalles.setText(duelista.nameDuelista);
 
+        CartaService serviceC = mRetrofit.create(CartaService.class);
 
+        if (isNetworkConnected()) {
+            List<Carta> SinSincroCarta = repositoryC.searchCarta(false);
+            for (Carta carta : SinSincroCarta) {
+                Log.d("MAIN_APP: DB SSincro", new Gson().toJson(carta));
+                carta.sincronizadoCartas = true;
+//                        base64toLink(movimientos.imagenBase64);
+//                        movimientos.urlimagen = urlImage;
+                double Latitud = LocationData.getInstance().getLatitude();
+                double Longitud = LocationData.getInstance().getLongitude();
+                carta.latitud = String.valueOf(Latitud);
+                carta.longitud= String.valueOf(Longitud);
+
+                repositoryC.updateCartas(carta);
+                //*****SINCRO*************************
+                SincronizacionCarta(serviceC,carta);
+            }
+            List<Carta> EliminarDBMovimiento = repositoryC.getAllCarta();
+            downloadingMockAPICarta(serviceC,repositoryC,EliminarDBMovimiento);
+            Toast.makeText(getBaseContext(), "SINCRONIZADO", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(getBaseContext(), "NO HAY INTERNET", Toast.LENGTH_SHORT).show();
+
+        }
 
 
 
@@ -98,31 +122,6 @@ public class DuelistaDetallesActivity extends AppCompatActivity {
             }
         });
 
-        CartaService serviceM = mRetrofit.create(CartaService.class);
-
-        if (isNetworkConnected()) {
-                    List<Carta> SinSincroCarta = repositoryC.searchCarta(false);
-                    for (Carta carta : SinSincroCarta) {
-                        Log.d("MAIN_APP: DB SSincro", new Gson().toJson(carta));
-                        carta.sincronizadoCartas = true;
-//                        base64toLink(movimientos.imagenBase64);
-//                        movimientos.urlimagen = urlImage;
-                        double Latitud = LocationData.getInstance().getLatitude();
-                        double Longitud = LocationData.getInstance().getLongitude();
-                        carta.latitud = String.valueOf(Latitud);
-                        carta.longitud= String.valueOf(Longitud);
-
-                        repositoryC.updateCartas(carta);
-                        //*****SINCRO*************************
-                        SincronizacionCarta(serviceM,carta);
-                    }
-                    List<Carta> EliminarDBMovimiento = repositoryC.getAllCarta();
-                    downloadingMockAPICarta(serviceM,repositoryC,EliminarDBMovimiento);
-                    Toast.makeText(getBaseContext(), "SINCRONIZADO", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(getBaseContext(), "NO HAY INTERNET", Toast.LENGTH_SHORT).show();
-
-                }
 
    }
 

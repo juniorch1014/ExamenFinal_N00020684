@@ -30,6 +30,7 @@ import com.google.gson.Gson;
 import com.upn.chuquilin.guerra.db.AppDatabase;
 import com.upn.chuquilin.guerra.entities.Carta;
 import com.upn.chuquilin.guerra.entities.LocationData;
+import com.upn.chuquilin.guerra.mapasController.MapsActivity;
 import com.upn.chuquilin.guerra.repositories.CartaRepository;
 import com.upn.chuquilin.guerra.services.CartaService;
 
@@ -85,8 +86,8 @@ public class CartasRegistrarActivity extends AppCompatActivity {
 
 
 //************************************************
-//        Intent intent =  new Intent(getApplicationContext(), MapsActivity.class);
-//        startActivity(intent);
+        Intent intent =  new Intent(getApplicationContext(), MapsActivity.class);
+        startActivity(intent);
 
         double Latitud = LocationData.getInstance().getLatitude();
         double Longitud = LocationData.getInstance().getLongitude();
@@ -99,7 +100,7 @@ public class CartasRegistrarActivity extends AppCompatActivity {
         btGaleriaCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery();
+//                openGallery();
             }
         });
 

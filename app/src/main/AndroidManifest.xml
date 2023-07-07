@@ -31,12 +31,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EzamenFinal_N00020684"
         tools:targetApi="31">
-        <activity
-            android:name=".CartaDetallesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CartaListActivity"
-            android:exported="false" />
+
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -52,6 +47,16 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB_4NdsM9axUZ-RICi5owPRkVz5Icg4XmY" />
 
+        <activity
+            android:name=".mapasController.MapaMostrar"
+            android:exported="false"
+            android:label="@string/title_activity_mapa_mostrar" />
+        <activity
+            android:name=".CartaDetallesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CartaListActivity"
+            android:exported="false" />
         <activity
             android:name=".mapasController.MapsActivity"
             android:exported="false"
